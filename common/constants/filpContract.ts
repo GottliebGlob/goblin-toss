@@ -1,9 +1,9 @@
 interface contractInterface {
-    chainId: number
-    address: `0x${string}`
-  }
-  
-  export const CoinFlip: contractInterface = {
-    chainId: 11155111,
-    address: "0x0415C3394DAcb2a07faFADf9926faF55f1489f56",
-  }
+  chainId: number;
+  address: `0x${string}`;
+}
+
+export const CoinFlip: contractInterface = {
+  chainId: 11155111,
+  address: "0x712d4899BEda5Bc0F2d39a624790FF315C5fCa57",
+};

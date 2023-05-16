@@ -1,26 +1,27 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import { useRef, useState } from 'react'
-import dynamic from "next/dynamic"
-import { ConnectButton } from '@rainbow-me/rainbowkit'
+import Head from "next/head";
+import Image from "next/image";
+import { useRef, useState } from "react";
+import dynamic from "next/dynamic";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
+import Header from "@/common/copmonents/Header/Header";
+import EventsList from "@/common/copmonents/EventsSection/EventsList/EventsList";
 
 const BettingSection = dynamic(
   () => import("@/common/copmonents/BetSection/BetSection"),
   {
     ssr: false,
-  },
-)
-
+  }
+);
 
 export default function Home() {
-  const [choice, setChoice] = useState(false)
+  const [choice, setChoice] = useState(false);
 
-  const videoRef = useRef<HTMLVideoElement>(null)
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   const onCoinClick = () => {
-    setChoice(!choice)
-    videoRef.current?.play()
-  }
+    setChoice(!choice);
+    videoRef.current?.play();
+  };
 
   return (
     <>
@@ -31,32 +32,28 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="w-screen min-h-screen bg-back-200 flex items-center flex-col">
-
-<div className="absolute top-4 right-4">
-
-</div>
-     
+        <Header />
 
         <section className="w-[70vw] min-w-[360px] h-full min-h-screen flex flex-col">
-          <div className="w-full flex flex-col items-center justify-center h-[70vh] min-h-[550px] bg-main rounded-2xl mt-[5%] transition ease-in-out delay-150 drop-shadow-gold hover:drop-shadow-goldStrong amination-fade">
-          <p className="text-white font-bold font-sans text-[72px]">1.94x</p>
+          <div className="w-full flex flex-col items-center justify-center h-[70vh] min-h-[550px] bg-main rounded-2xl mt-[100px] transition ease-in-out delay-150 drop-shadow-gold hover:drop-shadow-goldStrong amination-fade">
+            <p className="text-white font-bold font-sans text-[72px]">1.94x</p>
 
-<video
-  src="/coin.webm"
-  width="140"
-  height="140"
-  muted
-  ref={videoRef}
-  onClick={onCoinClick}
-  className="cursor-pointer brightness-80 contrast-75 hover:brightness-100 hover:contrast-100"
-/>
+            <video
+              src="/coin.webm"
+              width="140"
+              height="140"
+              muted
+              ref={videoRef}
+              onClick={onCoinClick}
+              className="cursor-pointer brightness-80 contrast-75 hover:brightness-100 hover:contrast-100"
+            />
 
-    <BettingSection choice={choice} />
+            <BettingSection choice={choice} />
           </div>
 
+          <EventsList />
         </section>
-        
       </main>
     </>
-  )
+  );
 }
