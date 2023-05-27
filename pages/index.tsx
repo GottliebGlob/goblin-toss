@@ -31,7 +31,7 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className="w-screen min-h-screen bg-back-200 flex items-center flex-col">
+      <main className="min-w-screen min-h-screen bg-back-200 flex items-center flex-col">
         <Header />
 
         <section className="w-[70vw] min-w-[360px] h-full min-h-screen flex flex-col">

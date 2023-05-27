@@ -5,5 +5,5 @@ interface contractInterface {
 
 export const CoinFlip: contractInterface = {
   chainId: 11155111,
-  address: "0x712d4899BEda5Bc0F2d39a624790FF315C5fCa57",
+  address: "0xfF22387FAC2Ab30dbdaA2f4e5c1484cab9C49e39",
 };

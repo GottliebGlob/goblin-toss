@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   useContractWrite,
   usePrepareContractWrite,
@@ -8,6 +8,8 @@ import {
   useSwitchNetwork,
 } from "wagmi";
 import { ethers } from "ethers";
+import {BiLoaderAlt} from 'react-icons/bi'
+import {CgSpinner} from 'react-icons/cg'
 
 import coinFlipContract from "@/common/abi/CoinToss.json";
 import useDebounce from "@/common/hooks/useDebounce";
@@ -16,6 +18,7 @@ import { useBalance } from "wagmi";
 import { toEther } from "@/common/helpers";
 import { useMaxPayout } from "@/common/utils/queries";
 import { get } from "http";
+import clsx from "clsx";
 
 interface BettingSectionProps {
   choice: boolean;
@@ -30,12 +33,12 @@ const BetSection = ({ choice }: BettingSectionProps) => {
   const { chain } = useNetwork();
   const { chains, switchNetwork } = useSwitchNetwork();
 
-  const { data: balance } = useBalance({
+  const { data: balance, refetch: refetchUser } = useBalance({
     address: address,
     chainId: Number(CoinFlip.chainId),
   });
 
-  const { data: contractBalance } = useBalance({
+  const { data: contractBalance, refetch: refetchContract } = useBalance({
     address: CoinFlip.address,
     chainId: Number(CoinFlip.chainId),
   });
@@ -56,16 +59,21 @@ const BetSection = ({ choice }: BettingSectionProps) => {
 
   const { data, write } = useContractWrite(config);
 
-  const { isLoading } = useWaitForTransaction({
+  const { isLoading, isSuccess } = useWaitForTransaction({
     hash: data?.hash,
   });
+
+  useEffect(() => {
+    refetchContract()
+    refetchUser()
+  }, [isSuccess])
 
   const handleFlip = () => {
     if (chain?.id !== CoinFlip.chainId) {
       switchNetwork?.(CoinFlip.chainId);
     } else {
       if (Number(amount) > 0) {
-        write?.();
+         write?.();
       }
     }
   };
@@ -133,9 +141,11 @@ const BetSection = ({ choice }: BettingSectionProps) => {
       {isConnected ? (
         <button
           disabled={isLoading || Number(amount) <= 0}
-          className="flex p-3 rounded-xl justify-center items-center bg-accent-200 w-full mt-8 hover:enabled:drop-shadow-gold transition ease-in-out delay-150 text-white hover:text-red-400 hover:enabled:text-[#FBC13C]"
+          className={clsx("flex p-3 rounded-xl justify-center items-center bg-accent-200 w-full mt-8 hover:enabled:drop-shadow-gold transition ease-in-out delay-150 text-white hover:text-red-400 hover:enabled:text-[#FBC13C]", isLoading && "animate-bounce")}
           onClick={handleFlip}
         >
+         
+ {isLoading && <CgSpinner className="animate-spin h-6 w-6 mr-2"/>}
           <p className="font-bold ">{getFlipText()}</p>
         </button>
       ) : (

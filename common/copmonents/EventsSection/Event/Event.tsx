@@ -6,9 +6,10 @@ interface BetEventProps {
   player: string;
   time: string;
   payout: string;
+  tx: string;
 }
 
-const BetEvent = ({ isWon, player, time, payout }: BetEventProps) => {
+const BetEvent = ({ isWon, player, time, payout, tx }: BetEventProps) => {
   return (
     <div className="flex w-full px-2 py-5 justify-between border-b border-b-accent-100 text-white text-sm ">
       <div className="flex w-full">
@@ -24,9 +25,10 @@ const BetEvent = ({ isWon, player, time, payout }: BetEventProps) => {
         <div className="min-w-[110px] max-w-[210px] w-full">{player}</div>
         <div className="min-w-[90px] max-w-[210px] w-full">1.94x</div>
         <div className="min-w-[60px] max-w-[210px] w-full">{payout}</div>
+        <div className="min-w-[60px] max-w-[210px] w-full cursor-pointer underline" onClick={()=> window.open(`https://sepolia.etherscan.io/tx/${tx}`, "_blank")}>Explore</div>
       </div>
 
-      <div className="text-white min-w-[90px] text-right">{time}</div>
+      <div className="text-white min-w-[110px] text-right">{time}</div>
     </div>
   );
 };
